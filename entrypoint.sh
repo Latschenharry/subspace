@@ -16,7 +16,7 @@ if [ -z "${SUBSPACE_BACKLINK-}" ] ; then
 fi
 
 if [ -z "${SUBSPACE_LETSENCRYPT-}" ] ; then
-    export SUBSPACE_LETSENCRYPT="true"
+    export SUBSPACE_LETSENCRYPT="false"
 fi
 
 if [ -z "${NAMESERVER-}" ] ; then
@@ -28,7 +28,7 @@ if [ -z "${SUBSPACE_HTTP_ADDR-}" ] ; then
 fi
 
 if [ -z "${SUBSPACE_HTTP_INSECURE-}" ] ; then
-    export SUBSPACE_HTTP_INSECURE="false"
+    export SUBSPACE_HTTP_INSECURE="true"
 fi
 
 export DEBIAN_FRONTEND="noninteractive"
