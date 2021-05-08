@@ -19,6 +19,10 @@ if [ -z "${SUBSPACE_LETSENCRYPT-}" ] ; then
     export SUBSPACE_LETSENCRYPT="true"
 fi
 
+if [ -z "${NAMESERVER-}" ] ; then
+    export NAMESERVER="1.1.1.1"
+fi
+
 if [ -z "${SUBSPACE_HTTP_ADDR-}" ] ; then
     export SUBSPACE_HTTP_ADDR=":80"
 fi
@@ -27,7 +31,6 @@ if [ -z "${SUBSPACE_HTTP_INSECURE-}" ] ; then
     export SUBSPACE_HTTP_INSECURE="false"
 fi
 
-export NAMESERVER="10.10.0.5"
 export DEBIAN_FRONTEND="noninteractive"
 
 # Set DNS server
