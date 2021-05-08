@@ -1,18 +1,6 @@
 # Subspace - A simple WireGuard VPN server GUI
 
-![Screenshot](https://raw.githubusercontent.com/subspacecloud/subspace/master/screenshot1.png?cachebust=8923409243)
-
-## Screenshots
-
-[Screenshot 1](https://raw.githubusercontent.com/subspacecloud/subspace/master/screenshot1.png)
-
-[Screenshot 2](https://raw.githubusercontent.com/subspacecloud/subspace/master/screenshot2.png)
-
-[Screenshot 3](https://raw.githubusercontent.com/subspacecloud/subspace/master/screenshot3.png)
-
-[Screenshot 4](https://raw.githubusercontent.com/subspacecloud/subspace/master/screenshot4.png)
-
-## Features
+Fork for usage with Reverse proxy and Custom Nameserver
 
 * **WireGuard VPN Protocol**
   * The most modern and fastest VPN protocol.
@@ -32,11 +20,7 @@ Running Subspace on a VPS is designed to be as simple as possible.
 
   * Public Docker image.
   * Single static Go binary with assets bundled.
-  * Automatic TLS using Let's Encrypt.
-  * Redirects http to https.
   * Works with a reverse proxy or standalone.
-
-### 1. Get a server
 
 **Recommended Specs**
 
@@ -44,20 +28,11 @@ Running Subspace on a VPS is designed to be as simple as possible.
 * Distribution: Ubuntu 16.04 (Xenial)
 * Memory: 512MB or greater
 
-### 2. Add a DNS record
 
-Create a DNS `A` record in your domain pointing to your server's IP address.
-
-**Example:** `subspace.example.com  A  172.16.1.1`
-
-### 3. Enable Let's Encrypt
-
-Subspace runs a TLS ("SSL") https server on port 443/tcp. It also runs a standard web server on port 80/tcp to redirect clients to the secure server. Port 80/tcp is required for Let's Encrypt verification.
 
 **Requirements**
 
-* Your server must have a publicly resolvable DNS record.
-* Your server must be reachable over the internet on ports 80/tcp and 443/tcp and 51820/udp (WireGuard).
+* Your server must be reachable over the internet on port 51820/udp (WireGuard).
 
 ### Usage
 
@@ -102,9 +77,6 @@ apt-get install -y wireguard
 # Remove dnsmasq because it will run inside the container.
 apt-get remove -y dnsmasq
 
-# Set DNS server.
-echo nameserver 1.1.1.1 >/etc/resolv.conf
-
 # Load modules.
 modprobe wireguard
 modprobe iptable_nat
@@ -118,7 +90,7 @@ sysctl -w net.ipv6.conf.all.forwarding=1
 
 Follow the official Docker install instructions: [Get Docker CE for Ubuntu](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/)
 
-Make sure to change the `--env SUBSPACE_HTTP_HOST` to your publicly accessible domain name.
+Make sure to change the `--env SUBSPACE_HTTP_HOST` to your domain nameand `--env NAMESERVER` to your preffered Nameserver.
 
 ```bash
 
@@ -133,7 +105,8 @@ docker create \
     --volume /usr/bin/wg:/usr/bin/wg \
     --volume /data:/data \
     --env SUBSPACE_HTTP_HOST=subspace.example.com \
-    subspacecloud/subspace:latest
+    --env NAMESERVER=NAMESERVER IP
+    latschenharry/subspace:latest
 
 $ sudo docker start subspace
 
@@ -149,7 +122,7 @@ Pull the latest image, remove the container, and re-create the container as expl
 
 ```bash
 # Pull the latest image
-$ sudo docker pull subspacecloud/subspace
+$ sudo docker pull latschenharry/subspace
 
 # Stop the container
 $ sudo docker stop subspace
